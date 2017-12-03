@@ -98,6 +98,7 @@ def main():
     prev_j = 0
     tmp_c = clusters
     while iterate < 10:
+        print(tmp_c)
         m1, m2, m3, jc = assign_cluster(tmp_c, dataset)
         tmp_c = move_centroid(m1, m2, m3)
         cm_file = open("iter{}_cm.txt".format(iterate + 1), 'a')
