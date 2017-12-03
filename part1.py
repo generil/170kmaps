@@ -1,4 +1,5 @@
 import math
+import matplotlib.pyplot as plot
 
 
 def initialize():
@@ -97,10 +98,15 @@ def main():
 
     prev_j = 0
     tmp_c = clusters
+    c1 = [clusters[0]]
+    c2 = [clusters[1]]
+    c3 = [clusters[2]]
     while iterate < 10:
-        print(tmp_c)
         m1, m2, m3, jc = assign_cluster(tmp_c, dataset)
         tmp_c = move_centroid(m1, m2, m3)
+        c1.append(tmp_c[0])
+        c2.append(tmp_c[1])
+        c3.append(tmp_c[2])
         cm_file = open("iter{}_cm.txt".format(iterate + 1), 'a')
         cost_j = compute_j(jc)
         diff_j = cost_j - prev_j
@@ -109,6 +115,38 @@ def main():
         cm_file.close()
         prev_j = cost_j
         iterate += 1
+
+    x, y = [], []
+    for item in dataset:
+        x.append(item[0])
+        y.append(item[1])
+
+    plot.tight_layout()
+    plot.plot(x, y, 'k.')
+
+    x, y = [], []
+    for item in c1:
+        x.append(item[0])
+        y.append(item[1])
+
+    plot.plot(x, y, 'ro')
+
+    x, y = [], []
+    for item in c2:
+        x.append(item[0])
+        y.append(item[1])
+
+    plot.plot(x, y, 'mo')
+
+    x, y = [], []
+    for item in c3:
+        x.append(item[0])
+        y.append(item[1])
+
+    plot.plot(x, y, 'bo')
+
+    plot.axis([0, 10, 0, 10])
+    plot.show()
 
 
 if __name__ == "__main__":
